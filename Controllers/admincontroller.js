@@ -141,7 +141,7 @@ module.exports.examresult = async function(req,res){
                         for (var i = 0; i < arr.length; i++) {
                             if(arr[i][key] === val) 
                             {
-                                arr[i].point = (arr[i].point - 2);
+                                arr[i].point = (arr[i].point - 1);
                                 arr[i].yanliscevap = (arr[i].yanliscevap + 1);
                                 arr[i].net = (arr[i].net - 0.25);
                             } 
@@ -177,7 +177,7 @@ module.exports.examresult = async function(req,res){
                                         userid: yanlis[f].userid,
                                         yanliscevap: 1,
                                         net: -0.25,
-                                        point: -2
+                                        point: -1
                                 })
                         }
                         else
