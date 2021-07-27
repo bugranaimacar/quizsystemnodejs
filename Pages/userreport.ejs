@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Exam System</title>
+    <link rel="stylesheet" href="../../../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="../../../../assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../assets/css/styles.min.css">
+</head>
+
+<body style="background: #f1f7fc;">
+    <header>
+        <ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" href="#">User Report</a></li><li class="nav-item"><a class="nav-link" href="/admin/exams">Exams</a></li><li class="nav-item"><a class="nav-link" href="/admin/dashboard">Main Panel</a></li><li class="nav-item"><a class="nav-link" href="/admin/quizs">Quizs</a></li><li class="nav-item"><a class="nav-link" href="/admin/users">Users</a></li><li class="nav-item"><a class="nav-link" href="/admin/questions">Questions</a></li><li class="nav-item"><a class="nav-link" href="/api/do-logout">Log Out</a></li></ul>
+    </header>
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col">
+                <h4 style="text-align: center;"><%=examname%></h4>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <div class="col-lg-1 offset-lg-2"><span>ID: <%= userdetails.id %></span></div>
+            <div class="col-lg-4 offset-lg-0"><span>Username: <%= userdetails.username %></span></div>
+            <div class="col-lg-2 offset-lg-0"><span>Grade: <%= userdetails.grade %></span></div>
+            <div class="col-lg-2 offset-lg-0"><span>Section: <%= userdetails.section %></span></div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 20px;font-size: 13px;font-family: Roboto, sans-serif;">
+        <div class="row">
+            <% for(var i = 0; i < quizs.length; i++) {%>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><%= quizs[i].quizname %></th>
+                                        <th>Doğru Cevap</th>
+                                        <th>Verilen Cevap</th>
+                                    </tr>
+                                </thead>
+                                <% for(var d = 0; d < userquestions.length; d++){ %>
+                                   <% if(quizs[i].id == userquestions[d].quizid){ %>
+                                    <tbody>
+                                    <tr>
+                                        
+                                        <td><%= userquestions[d].questionnumber %>- <%= userquestions[d].description %></td>
+
+                                        <td><%= userquestions[d].correctanswer %></td>
+
+                                        <% for(var c = 0; c < useranswers.length; c++){ %>
+                                            <% if(useranswers[c].questionid == userquestions[d].id) { %>
+                                                <td><%= useranswers[c].answer %></td>
+                                            <% } } %>
+
+                                    </tr>
+                                    <tr></tr>
+                                </tbody>
+                                   <% } %>
+                                <% } %>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <script src="../../../../assets/js/jquery.min.js"></script>
+    <script src="../../../../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../../assets/js/script.min.js"></script>
+</body>
+
+</html>

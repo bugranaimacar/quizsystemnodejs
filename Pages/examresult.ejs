@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>Exam System</title><link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css?h=b3e4e725b0976ce461d98636404978a1"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700"><link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css?h=f884b94d2130eed5937399c725be18b1"><link rel="stylesheet" href="../../assets/css/styles.min.css?h=e1a3a608af3c069aab134589e13950fb"></head><body style="background: #f1f7fc;"><ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" href="/admin/examresult/<%= examid %>">Exam Result</a></li><li class="nav-item"><a class="nav-link" href="/admin/exams">Exams</a></li><li class="nav-item"><a class="nav-link" href="/admin/dashboard">Main Panel</a></li><li class="nav-item"><a class="nav-link" href="/admin/quizs">Quizs</a></li><li class="nav-item"><a class="nav-link" href="/admin/users">Users</a></li><li class="nav-item"><a class="nav-link" href="/admin/questions">Questions</a></li><li class="nav-item"><a class="nav-link" href="/api/do-logout">Log Out</a></li></ul>
+    <h3 align="center" style="margin-top: 10px">Exam Result</h3>
+					<div align="center">  
+                     </div>				
+                <br /> 
+                <div class="container"> 
+                <div class="table-responsive"> 
+									
+                     <table id="examresult" class="table table-striped table-bordered">  
+                          <thead>  
+                               <tr>
+                                    <td>Sıralama:</td>
+                                    <td>User Name:</td> 
+                                    <td>Doğru Cevap:</td>  
+                                    <td>Yanlış Cevap:</td>  
+                                    <td>Net</td>
+                                    <td>Puan</td>   
+							 <td width="13%">User Report</td>
+                               </tr>          
+                          </thead>
+                          <% for(var i = 0; i < puanlar.length; i++) { %>  
+                          <tr>
+                              <td><%= i + 1 %></td>
+                              <td><%= isimler[i] %></td>
+                              <% var dogrucevap = '0'; if(puanlar[i].dogrucevap) dogrucevap = puanlar[i].dogrucevap; %>
+                              <td><%= dogrucevap %></td>
+                              <% var yanliscevap = '0'; if(puanlar[i].yanliscevap) dogrucevap = puanlar[i].yanliscevap; %>
+                              <td><%= yanliscevap %></td>
+                              <td><%= puanlar[i].net %></td>
+                              <td><%= puanlar[i].point %></td>  
+                              <td><input type="button" style="padding: 5px" value="User Report" onclick="window.location.href = '/admin/userreport/<%= examid %>/<%= puanlar[i].userid%>'" class="btn-secondary"> </td>
+                         </tr> 
+                         <% } %>  
+                     </table>  
+                </div> 
+            </div> 
+        </div> 
+
+                    
+                        <script src="../../assets/js/jquery.min.js?h=84e399b8f2181ccd73394fdeddff1638"></script><script src="../../assets/bootstrap/js/bootstrap.min.js?h=19bbdecfa6ce3c33e1aa42dc000a8eb4"></script><script src="../../assets/js/chart.min.js?h=f884b94d2130eed5937399c725be18b1"></script><script src="../../assets/js/script.min.js?h=bc08a79abc02931c28c3cd0c5300ae33"></script>
+                        <link rel="stylesheet" type="text/css" href="../../assets/DataTables/datatables.min.css"/>
+                        <script type="text/javascript" src="../../assets/DataTables/datatables.min.js"></script>
+
+
+                        <script>  
+                            $(document).ready(function(){  
+                                 $('#examresult').DataTable();  
+                            });  
+                        </script>  
+
+
+
+    
+<script src="../../assets/bootstrap/js/bootstrap.min.js?h=19bbdecfa6ce3c33e1aa42dc000a8eb4"></script><script src="../../assets/js/chart.min.js?h=f884b94d2130eed5937399c725be18b1"></script><script src="../../assets/js/script.min.js?h=bc08a79abc02931c28c3cd0c5300ae33"></script></body></html>

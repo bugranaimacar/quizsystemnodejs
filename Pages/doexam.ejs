@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>Exam System</title><link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css?h=45370df2fd87c262b7bb148660b18254"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700"><link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css?h=f884b94d2130eed5937399c725be18b1"><link rel="stylesheet" href="../../assets/css/styles.min.css?h=e1a3a608af3c069aab134589e13950fb"></head><body style="background: #f1f7fc;"><!-- Start: Header --><header class="header-blue" style="padding-bottom: 10px;background: var(--bs-indigo);"><nav class="navbar navbar-dark navbar-expand-md d-xl-flex navigation-clean-search"><div class="container-fluid"><a class="navbar-brand" ><%= decodedtoken.username %></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navcol-1"><div style="min-height: 20px;"></div><div class="ms-auto"><a class="btn btn-light action-button" role="button" href="/api/do-logout">Log Out</a></div></div></div></nav></header><!-- End: Header --><div><div class="col-lg-6 offset-lg-3" style="margin-top: 5px;"><div id="checkconn" class="alert alert-danger alert-dismissible fade show" role="alert">
+    Bir hata oluştu, lütfen internet bağlantınızı kontrol edin!
+    <button type="button" class="btn-close" onclick="$('#checkconn').fadeOut();" aria-label="Close"></button>
+  </div>
+
+  <% for(var d = 0; d < answer.length; d++) { %>
+
+    <% if(question[0].id == answer[d].questionid) { ilksoru = answer[d].answer } else { ilksoru = 'YOK'} %>
+   <% }  %>
+
+</div></div><div class="container"><section><div class="col-sm-11 col-md-12 col-lg-12 col-xl-10 col-xxl-11 offset-sm-1 offset-md-0 offset-lg-0 offset-xl-1 offset-xxl-1" style="padding: 30px;margin-bottom: -22px;"><div><ul class="nav nav-tabs"><li value="<%= quiz[0].id %>" class="nav-item"><a class="nav-link active" href="#"><%= quiz[0].quizname %></a></li><% for(var i = 1; i < quiz.length; i++) { %> <li value="<%= quiz[i].id %>" class="nav-item"><a class="nav-link" href="#"><%= quiz[i].quizname %></a></li><% } %></ul><div style="margin-top: 10px;margin-bottom: 10px;"></div></div></div><div class="col-lg-12 col-xl-10 col-xxl-11 offset-1 offset-md-0 offset-xl-1"><div class="row"><div class="col-12 col-sm-10 col-md-9 col-lg-5 col-xl-5 offset-xl-0"><button class="btn btn-primary me-auto" id="questionbutton" type="button" value="<%= question[0].id %>" style="font-size: 14px;font-family: 'Source Sans Pro', sans-serif;margin-top: 10px;padding: 0px 12px;margin-bottom: 10px;">Soru 1</button><div class="text-start" style="margin-bottom: 25px;"><img id="questionimage" style="max-width:350px;max-height:350px;" src="../<%= question[0].image %> "></div><div style="margin-bottom: 25px;width: 400px;"><div class="row"><div name="AltSorular" id="AltSorular"><div class="col-lg-2 col-xl-2" style="height: 35px;"><div class="form-check"><input class="form-check-input" type="radio" <% if(ilksoru == 'A') { %> checked <% } %> name="SoruCevap" id="SoruCevap"><label class="form-check-label" >A</label></div></div><div class="col-lg-2 col-xl-2" style="height: 35px;"><div class="form-check"><input class="form-check-input" type="radio" name="SoruCevap" <% if(ilksoru == 'B') { %> checked <% } %> id="SoruCevap"><label class="form-check-label" >B</label></div></div><div class="col-lg-2 col-xl-2" style="height: 35px;"><div class="form-check"><input class="form-check-input" type="radio" name="SoruCevap" <% if(ilksoru == 'C') { %> checked <% } %> id="SoruCevap"><label class="form-check-label" >C</label></div></div><div class="col-lg-2 col-xl-2" style="height: 35px;"><div class="form-check"><input class="form-check-input" <% if(ilksoru == 'D') { %> checked <% } %> type="radio" name="SoruCevap" id="SoruCevap"><label class="form-check-label" >D</label></div></div><div class="col-lg-2 col-xl-2" style="height: 35px;"><div class="form-check"><input class="form-check-input" type="radio" name="SoruCevap" <% if(ilksoru == 'E') { %> checked <% } %> id="SoruCevap"><label class="form-check-label">E</label></div></div></div><div class="col-lg-1 col-xl-1" style="height: 35px;"><i id="altsorutrash" class="fa fa-trash"></i></div><div class="col-lg-12 col-xl-12 offset-lg-0 offset-xl-0" style="height: 35px;"><hr></div><div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 offset-lg-0 offset-xl-0" style="height: 35px;"><button id="onceki" class="btn btn-secondary" type="button">Önceki</button></div><div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 offset-3 offset-sm-6 offset-md-6 offset-lg-6 offset-xl-6" style="height: 35px;"><button class="btn btn-secondary" id="sonraki" type="button">Sonraki</button></div></div></div></div><div class=" col-12 col-sm-2 col-md-3 col-lg-4 col-xl-4 col-xxl-3 offset-md-0 offset-lg-2 offset-xl-3 offset-xxl-4"><hr><div class="text-end"><div class="row"><div class="col-9 col-sm-10 col-md-7 col-lg-9 col-xl-9 text-start"><label id="kalanzaman" class="col-form-label" style="font-size: 15px;font-family: Alatsi, sans-serif;">Kalan Süre: 1 saat 42 saniye</label></div><div class="col-2 col-sm-1 col-md-2 col-lg-1 col-xl-1 offset-sm-0 offset-xl-0"><i class="fa fa-info-circle"></i></div><div class="col-1 col-sm-1 col-md-2 col-lg-1 col-xl-1 offset-sm-0 offset-xl-0"><i data-bs-toggle="modal" data-bs-target="#sinavbitir" class="fa fa-power-off"></i></div></div></div><hr><div id="sorularyeri">
+
+  <% for(var i = 0; i < question.length; i++) { %>
+    
+    <% if(answer) {  %> 
+    <% for(var d = 0; d < answer.length; d++) { %>
+
+      <% if(question[i].id == answer[d].questionid) { cevap = answer[d].answer } %>
+
+        <% } %>
+    <% } %>
+   
+    <div class="row"><div id="sorusayisi" class="col-lg-1"><label><%= question[i].questionnumber %>-</label><input type="hidden" name="questionid" id="questionid" value="<%= question[i].id %>"/></div><div class="col-lg-2"><div class="form-check"><input class="form-check-input" <% if(cevap == "A") { %> checked <% } %> name="question: <%= question[i].questionnumber %>" type="radio" id="question: <%= question[i].questionnumber %>"><label class="form-check-label">A</label></div></div><div class="col-lg-2"><div class="form-check"><input class="form-check-input" type="radio" <% if(cevap == "B") { %> checked <% } %> id="question: <%= question[i].questionnumber %>" name="question: <%= question[i].questionnumber %>"><label class="form-check-label">B</label></div></div><div class="col-lg-2"><div class="form-check"><input class="form-check-input" name="question: <%= question[i].questionnumber %>" <% if(cevap == "C") { %> checked <% } %> type="radio" id="question: <%= question[i].questionnumber %>"><label class="form-check-label">C</label></div></div><div class="col-lg-2"><div class="form-check"><input class="form-check-input" type="radio" name="question: <%= question[i].questionnumber %>" <% if(cevap == "D") { %> checked <% } %> id="question: <%= question[i].questionnumber %>"><label class="form-check-label">D</label></div></div><div class="col-lg-2"><div class="form-check"><input class="form-check-input" type="radio" name="question: <%= question[i].questionnumber %>" <% if(cevap == "E") { %> checked <% } %> id="question: <%= question[i].questionnumber %>"><label class="form-check-label">E</label></div></div><div class="col-lg-1"><i id="question: <%= question[i].questionnumber %>" class="yansorutrash fa fa-trash"></i></div><div class="col-12"><hr style="margin-top: 5px;margin-bottom: 5px;"></div></div>
+   <% cevap = 'YOK' } %>
+   
+</div></div></div></div></div>
+</section></div><div id="sinavbitir" class="modal fade" role="dialog" tabindex="-1"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Sınav</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><p>Sınavı bitirmek istediğinizden emin misiniz ?</p></div><div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Hayır</button><button class="btn btn-primary" onclick="window.location.href = '/exam/mainexam'" type="button">Evet</button></div></div></div></div>
+
+
+<script src="../../assets/js/jquery.min.js?h=84e399b8f2181ccd73394fdeddff1638"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  function time(){
+    var zaman = moment.utc(moment(new Date('<%= exam[0].enddate %>'),"DD/MM/YYYY HH:mm:ss").diff(moment(new Date(),"DD/MM/YYYY HH:mm:ss")));
+    $("#kalanzaman").html('Kalan Zaman: ' + zaman.format("HH") + ' Saat ' + zaman.format("mm") + ' Dakika ' + zaman.format('ss') + ' Saniye');
+    if(new Date() > new Date('<%= exam[0].enddate %>'))
+    {
+      window.location.href = '/exam/mainexam';
+    }
+  }
+
+  window.onload = function() {
+    var zaman = moment.utc(moment(new Date('<%= exam[0].enddate %>'),"DD/MM/YYYY HH:mm:ss").diff(moment(new Date(),"DD/MM/YYYY HH:mm:ss")));
+    $("#kalanzaman").html('Kalan Zaman: ' + zaman.format("HH") + ' Saat ' + zaman.format("mm") + ' Dakika ' + zaman.format('ss') + ' Saniye');
+    setInterval(time, 1000);
+  };
+</script>
+
+<script>
+
+$(document).on('click', '#sonraki', function(){
+  var quizid = $('.nav .active').parent().val();
+  var questionnumber = $("#questionbutton").text().match(/\w+$/)[0];
+    $.ajax(
+      {
+        type: "POST",
+        url: "/api/getnextquestion",
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+        data: {'quizid': quizid, 'questionnumber' : questionnumber},
+        
+        success: function (response) {
+
+          if(response.status == false)
+          {
+            return;
+          }
+        
+        $("#questionimage").attr("src","../" + response[0].image);
+        $("#questionbutton").val(response[0].id);
+        $("#questionbutton").text("Soru " + response[0].questionnumber);
+
+        $('[name=AltSorular]').find('label').each(function() {
+          $(this).prev().prop("checked", false);
+
+          $.ajax(
+    {
+    type: "POST",
+    url: "/api/getuseranswerinquiz",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': $("#questionbutton").val()},
+    
+    success: function (data) {
+        if(data.status != false)
+        {
+          $('[name=AltSorular]').find('label').each(function() {
+        var name = $(this).text();
+        if(name == data[0].answer)
+        {
+          $(this).prev().prop("checked", true);
+        }
+    });
+          
+        }
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+
+
+    });
+
+        },
+
+        error: function(XMLHttpRequest, textStatus,errorThrown) {
+          $('#checkconn').toggle();
+         },
+
+      })
+
+});
+
+$(document).on('click', '#onceki', function(){
+  var quizid = $('.nav .active').parent().val();
+  var questionnumber = $("#questionbutton").text().match(/\w+$/)[0];
+    $.ajax(
+      {
+        type: "POST",
+        url: "/api/getprevquestion",
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+        data: {'quizid': quizid, 'questionnumber' : questionnumber},
+        
+        success: function (response) {
+
+          if(response.status == false)
+          {
+            return;
+          }
+        
+        $("#questionimage").attr("src","../" + response[0].image);
+        $("#questionbutton").val(response[0].id);
+        $("#questionbutton").text("Soru " + response[0].questionnumber);
+          
+        $('[name=AltSorular]').find('label').each(function() {
+          $(this).prev().prop("checked", false);
+    });
+
+    $.ajax(
+    {
+    type: "POST",
+    url: "/api/getuseranswerinquiz",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': $("#questionbutton").val()},
+    
+    success: function (data) {
+        if(data.status != false)
+        {
+          $('[name=AltSorular]').find('label').each(function() {
+        var name = $(this).text();
+        if(name == data[0].answer)
+        {
+          $(this).prev().prop("checked", true);
+        }
+    });
+          
+        }
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+
+        },
+
+        error: function(XMLHttpRequest, textStatus,errorThrown) {
+          $('#checkconn').toggle();
+         },
+
+      })
+
+});
+
+</script>
+
+<script>
+
+$(document).on('click', '.yansorutrash', function(){
+  var basilan = $(this);
+    $.ajax(
+      {
+      type: "DELETE",
+      url: "/api/deleteanswer",
+      headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+      data: {'questionid': $(this).parent().parent().children().find('#questionid').val()},
+      
+      success: function () {
+        
+        $(this).parent().parent().find('label').each(function() {
+            $(this).prev().prop("checked", false);
+      });
+  
+      $.ajax(
+      {
+      type: "POST",
+      url: "/api/getquizquestiondata",
+      headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+      data: {'quizid': $('.nav .active').parent().val()},
+      
+      success: function (gelenveri) {
+          $('#sorularyeri').html(gelenveri);
+      }});
+
+      if($("#questionbutton").val() == basilan.parent().parent().children().find('#questionid').val())
+      {
+        $('[name=AltSorular]').find('label').each(function() {
+          $(this).prev().prop("checked", false);
+    });
+      }
+  
+    },
+  
+      error: function(XMLHttpRequest, textStatus,errorThrown) {
+          $('#checkconn').toggle();
+         },
+        });
+  
+  
+  })
+  
+  </script>
+
+
+<script>
+
+$("#altsorutrash").click(function(){
+    
+  $.ajax(
+    {
+    type: "DELETE",
+    url: "/api/deleteanswer",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': $("#questionbutton").val()},
+    
+    success: function () {
+      
+      $('[name=AltSorular]').find('label').each(function() {
+          $(this).prev().prop("checked", false);
+    });
+
+    $.ajax(
+    {
+    type: "POST",
+    url: "/api/getquizquestiondata",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'quizid': $('.nav .active').parent().val()},
+    
+    success: function (gelenveri) {
+        $('#sorularyeri').html(gelenveri);
+    }});
+
+  },
+
+    error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+      });
+
+
+})
+
+</script>
+
+<script>
+
+$(document).ready(function() {
+  $(document).on('click', 'input[type=radio]', function() {
+    var answer = $(this).parent().text();
+    var tiklanan = $(this);
+       if($(this).parent().parent().parent().attr('name') == 'AltSorular')
+       {
+
+         $.ajax(
+    {
+    type: "PUT",
+    url: "/api/saveanswer",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': $("#questionbutton").val(), 'answer': answer},
+        success: function(){
+          $.ajax(
+    {
+    type: "POST",
+    url: "/api/getquizquestiondata",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'quizid': $('.nav .active').parent().val()},
+    
+    success: function (gelenveri) {
+        $('#sorularyeri').html(gelenveri);
+    }});
+  
+        },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+       }
+       else
+       {
+         var eslesme = tiklanan.parent().parent().parent().children().find('#questionid').val();
+        $.ajax(
+    {
+    type: "PUT",
+    url: "/api/saveanswer",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': eslesme, 'answer': answer},
+    
+    success: function () {
+      if($("#questionbutton").val() == eslesme)
+      {
+      $('[name=AltSorular]').find('label').each(function() {
+          var name = $(this).text();
+          if(name == answer)
+          {
+            $(this).prev().prop("checked", true);
+          }
+       });
+      }
+      
+    },
+
+    error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+      
+  });
+
+
+       }
+    });
+});
+
+</script>
+
+<script type="text/javascript">
+$("#checkconn").hide();
+</script>
+
+  <script>
+$(function() {
+   $(".nav a").click(function() {
+      $(".nav a").removeClass("active");
+      $(this).addClass("active");
+      var quizid = $(this).parent().val();
+      $('[name=AltSorular]').find('label').each(function() {
+          $(this).prev().prop("checked", false);
+    });
+
+      $.ajax(
+    {
+    type: "POST",
+    url: "/api/getquizquestiondata",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'quizid': quizid},
+    
+    success: function (gelenveri) {
+        $('#sorularyeri').html(gelenveri);
+
+        $.ajax(
+    {
+    type: "POST",
+    url: "/api/getquestioninquiz",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'quizid': quizid},
+    
+    success: function (data) {
+      if(data.status != false)
+      {
+        $("#questionimage").attr("src","../" + data[0].image);
+        $("#questionbutton").val(data[0].id);
+        $.ajax(
+    {
+    type: "POST",
+    url: "/api/getuseranswerinquiz",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'firstanswer': 'firstanswer', 'quizid': quizid},
+    
+    success: function (veri) {
+        if(veri.status != false)
+        {
+          $('[name=AltSorular]').find('label').each(function() {
+        var name = $(this).text();
+        if(name == veri.answer)
+        {
+          $(this).prev().prop("checked", true);
+        }
+    });
+          
+        }
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+
+      }
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+        $("#questionbutton").text("Soru 1");
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+
+   });
+});
+
+  </script>
+
+<script>
+   $(document).on("click", "#sorusayisi label", function(){
+    var div = $(this).parent();
+     var questionid = div.find("input").val();
+
+     $('[name=AltSorular]').find('label').each(function() {
+          $(this).prev().prop("checked", false);
+    });
+
+     $.ajax(
+    {
+    type: "POST",
+    url: "/api/getquestioninquiz",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': questionid},
+    
+    success: function (response) {
+      $.ajax(
+    {
+    type: "POST",
+    url: "/api/getuseranswerinquiz",
+    headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+    data: {'questionid': questionid},
+    
+    success: function (data) {
+        if(data.status != false)
+        {
+          $('[name=AltSorular]').find('label').each(function() {
+        var name = $(this).text();
+        if(name == data[0].answer)
+        {
+          $(this).prev().prop("checked", true);
+        }
+    });
+          
+        }
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+        $("#questionimage").attr("src","../" + response[0].image);
+        $("#questionbutton").val(response[0].id);
+        $("#questionbutton").text("Soru " + response[0].questionnumber);
+       },
+       error: function(XMLHttpRequest, textStatus,errorThrown) {
+        $('#checkconn').toggle();
+       },
+    });
+
+   
+}); 
+    </script>
+
+<script src="../../assets/bootstrap/js/bootstrap.min.js?h=19bbdecfa6ce3c33e1aa42dc000a8eb4"></script><script src="../../assets/js/chart.min.js?h=f884b94d2130eed5937399c725be18b1"></script><script src="../../assets/js/script.min.js?h=bc08a79abc02931c28c3cd0c5300ae33"></script></body></html>

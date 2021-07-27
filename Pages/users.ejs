@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>Exam System</title><link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css?h=b3e4e725b0976ce461d98636404978a1"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700"><link rel="stylesheet" href="../assets/fonts/font-awesome.min.css?h=f884b94d2130eed5937399c725be18b1"><link rel="stylesheet" href="../assets/css/styles.min.css?h=e1a3a608af3c069aab134589e13950fb"></head><body style="background: #f1f7fc;"><ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" href="/admin/users">Users</a></li><li class="nav-item"><a class="nav-link" href="/admin/exams">Exams</a></li><li class="nav-item"><a class="nav-link" href="/admin/dashboard">Main Panel</a></li><li class="nav-item"><a class="nav-link" href="/admin/quizs">Quizs</a></li><li class="nav-item"><a class="nav-link" href="/admin/questions">Questions</a></li><li class="nav-item"><a class="nav-link" href="/api/do-logout">Log Out</a></li><li class="nav-item"></li></ul>
+     <form method="post" id="insert_form"><div class="modal fade" id="add_data_Modal" role="dialog" tabindex="-1"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">User Details</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row"><div class="col-sm-3" style="height: 30px;width: 140px;"><p style="width: 140px;">Username</p></div><div class="col-lg-8" style="width: 324.656px;"><input type="text" id="newusername" name="newusername" style="width: 300px;height: 20px;"></div></div><div class="row"><div class="col-sm-3" style="height: 30px;width: 140px;"><p style="width: 140px;">Password</p></div><div class="col-lg-8" style="width: 324.656px;"><input type="text" id="newpassword" name="newpassword" style="width: 300px;height: 20px;"></div></div><div class="row"><div class="col-sm-3" style="height: 31px;width: 140px;">
+               <p>Grade</p></div><div class="col-lg-8" style="width: 324.656px;"><input type="text" name="newgrade" id="newgrade" style="width: 300px;height: 20px;"></div></div><div class="row"><div class="col-sm-3" style="height: 30px;width: 140px;">
+                    <p>Section</p></div><div class="col-lg-8" style="width: 324.656px;"><input type="text" name="newsection" id="newsection" style="width: 300px;height: 20px;"></div></div><div class="row"><div class="col-sm-3" style="height: 30px;width: 140px;"> <input type="hidden" name="newuserid" id="newuserid" value=""/>  
+                         <p>Admin</p></div><div class="col-lg-8" style="width: 324.656px;"><input type="text" name="newadmin" id="newadmin" style="width: 300px;height: 20px;"></div></div></div><div class="modal-footer"><button class="btn btn-danger" onclick="Sil()" type="button">Delete</button><input type="submit" name="insert" id="insert" value="Create" class="btn btn-success"/></button></div></div></div></div></form></div>
+    <h3 align="center" style="margin-top: 10px">User List</h3>
+					<div align="center">  
+                          <button type="button" name="add" id="add" class="btn btn-warning">Add User</button>  
+                     </div>				
+                <br />
+                <div class="container"> 
+    <div class="table-responsive"> 
+									
+        <table id="userdata" class="table table-striped table-bordered">  
+             <thead>  
+                  <tr>  
+                       <td>Username</td>  
+                       <td>Password</td>  
+                       <td>Admin</td>
+                       <td>Grade</td>
+                       <td>Section</td>
+                       <td>Create Date</td>  
+                       <td width="13%">Edit User</td>
+                  </tr>          
+             </thead>  
+             <% for(var i = 0; i < users.length; i++) { %>  
+                <tr>
+                    <td><%= users[i].username %></td>
+                    <td><%= users[i].password %></td>
+                    <td><%= users[i].admin %></td>
+                    <td><%= users[i].grade %></td>
+                    <td><%= users[i].section %></td> 
+                    <td><%= users[i].createdate %></td>   
+                    <td><input type="button" style="padding: 5px" value="Edit User" id="<%= users[i].id %>" class="btn-secondary naim2"> </td>
+               </tr> 
+               <% } %>  
+            
+        </table>  
+     </div>  
+   </div>
+</div> 
+
+<script src="../assets/js/jquery.min.js?h=84e399b8f2181ccd73394fdeddff1638"></script><script src="../assets/bootstrap/js/bootstrap.min.js?h=19bbdecfa6ce3c33e1aa42dc000a8eb4"></script><script src="../assets/js/chart.min.js?h=f884b94d2130eed5937399c725be18b1"></script><script src="../assets/js/script.min.js?h=bc08a79abc02931c28c3cd0c5300ae33"></script>
+<link rel="stylesheet" type="text/css" href="../assets/DataTables/datatables.min.css"/>
+ 
+<script type="text/javascript" src="../assets/DataTables/datatables.min.js"></script>
+<script>  
+    $(document).ready(function(){  
+         $('#userdata').DataTable();  
+    });  
+    </script>
+
+<script>
+  
+	$(document).on('click', '.naim2', function(){  
+           var userid = $(this).attr("id");  
+		   $(".btn-danger").show();
+			$('#newuserid').val(userid);
+			if(userid != '')  
+           {  
+                $.ajax({  
+                url:"/api/admin/getuserdata",  
+                method:"POST",
+                headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')}, 
+                data:{'userid':userid},  
+                dataType:"json",  
+                success:function(data){ 
+                     $('#newuserid').val(data[0].id); 
+                     $('#newusername').val(data[0].username);  
+                     $('#newpassword').val(data[0].password);
+                     $('#newgrade').val(data[0].grade);
+                     $('#newsection').val(data[0].section);   
+                     $('#newadmin').val(data[0].admin);
+					 $('#insert').val("Update");  
+					 $('#add_data_Modal').modal('show'); 					 
+                }  
+           });  
+           }
+			
+	});
+		  
+ 
+ </script>
+
+<script>
+	
+     function Sil() {
+          
+          var userid = $("input[name='newuserid']").val();
+        $.ajax(
+     {
+     type: "POST",
+     url: "/api/admin/deleteuserdata",
+     headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},
+     data: {'userid': userid},
+     
+     success: function (response) {
+                window.location.href = "/admin/users"; 
+        },
+     
+});
+    }
+     
+     $('#insert_form').on("submit", function(event){  
+           event.preventDefault();  
+           if($('#newusername').val() == "")  
+           {  
+                alert("Username is required");  
+           }  
+           else if($('#newpassword').val() == "")  
+           {  
+                alert("Password is required");  
+           }
+           else  
+           {  
+                $.ajax({  
+                     url:"/api/admin/saveuserdata",  
+                     method:"POST",
+                     headers: {"Authorization": 'Bearer ' + localStorage.getItem('jwt')},  
+                     data:$('#insert_form').serialize(),  
+                     beforeSend:function(){  
+                          $('#insert').val("Inserting");  
+                     },  
+                     success: function (response) {
+                          $('#insert_form')[0].reset();  
+                          $('#add_data_Modal').modal('hide'); 
+                              window.location.href = "/admin/users"; 
+
+                          
+                     }  	 
+                });  
+           }  
+      });  
+     
+     
+     </script>
+
+<script>
+	
+	$(document).ready(function(){  
+      $('#add').click(function(){
+		  
+			$(".btn-danger").hide();
+		   $("input[name='newuserid']").val("");
+           $('#insert').val("Insert");  
+           $('#insert_form')[0].reset();  
+           $("#add_data_Modal").modal('show');
+      });  
+	});
+     </script>
+</body></html>
