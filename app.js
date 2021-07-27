@@ -27,4 +27,4 @@ app.use('/api', routeapi);
 app.use('/exam', routeexam);
 app.use('/admin', routeadmin);
 app.get('/', checkJwt.checklogin, controllerlogin.login);
-app.listen(8090);
+app.listen(8070);
