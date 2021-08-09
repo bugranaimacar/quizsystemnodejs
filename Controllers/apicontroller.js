@@ -241,7 +241,7 @@ module.exports.login = async function(req, res){
                 var newtoken = checkJwt.givetoken(results[0].id, results[0].username, results[0].grade, results[0].admin, results[0].section);
                          if(results[0].admin > 0)
                          {
-                                res.cookie('jwt', newtoken, { httpOnly: true });
+                                res.cookie('jwt', newtoken, { httpOnly: true, sameSite: "Strict"});
                                 res.send({
                                     message: 'Admin',
                                     token: newtoken,
@@ -251,7 +251,7 @@ module.exports.login = async function(req, res){
                                 console.log('An admin has logged in. (Username: ' + username + ' Password: ' + password + ')');
                                 return;
                          }
-                                res.cookie('jwt', newtoken, { httpOnly: true });
+                                res.cookie('jwt', newtoken, { httpOnly: true, sameSite: "Strict"});
                                 res.send({
                                 message: 'User',
                                 token: newtoken,
