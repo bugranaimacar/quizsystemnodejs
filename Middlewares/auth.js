@@ -7,7 +7,7 @@ var publicKey = fs.readFileSync('./keys/public.key.pub');
 
 module.exports.givetoken = function(id, username, grade, admin, section) {
 
-    const token = jwt.sign({
+    const usertoken = jwt.sign({
         id: id,
         username: username,
         grade: grade,
@@ -15,7 +15,7 @@ module.exports.givetoken = function(id, username, grade, admin, section) {
         admin: admin,
         exp: Math.floor(Date.now() / 1000) + 18000
     },  privateKey, { algorithm: 'RS256' })
-    return(token)
+    return(usertoken)
 }
 
 module.exports.validateadmin = function(req, res, next) {
@@ -75,6 +75,42 @@ module.exports.checklogin = function(req, res, next) {
             return res.redirect('/api/do-logout')
         } else {
             return res.redirect('/api/do-logout')
+        }
+    }
+
+}
+
+module.exports.validateapiauthorization = function(req, res, next) {
+    try {
+            if(req.headers.authorization)
+            {
+                token = req.headers.authorization.split(" ")[1]
+            }
+            else
+            {
+                return res.status(401).send({
+                    message: 'Token bulunamadı!',
+                    status: false
+                })
+            }
+        const decodedToken = jwt.verify(token, publicKey, { algorithm: 'RS256' })
+        next();
+    } catch (error) {
+        if (error.name === "TokenExpiredError") {
+            return res.status(401).send({
+                message: 'Token Süresi Dolmuş',
+                status: false
+            })
+        } else if (error.name === "JsonWebTokenError") {
+            return res.status(401).send({
+                message: 'Geçersiz Token veya İmza',
+                status: false
+            })
+        } else {
+            return res.status(401).send({
+                message: 'Yetkisiz Erişim',
+                status: false
+            })
         }
     }
 
