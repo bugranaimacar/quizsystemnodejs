@@ -730,7 +730,6 @@ module.exports.getuserdata = function (req, res ) {
     }
 }
 const formidable = require('formidable');
-const { NONAME } = require('dns');
 module.exports.savequestiondata = function (req, res ) {
     const form = new formidable.IncomingForm();
     form.parse(req, async function(err, fields, files){
