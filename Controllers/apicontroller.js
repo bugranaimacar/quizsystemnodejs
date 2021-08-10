@@ -284,6 +284,14 @@ module.exports.saveanswer = function (req, res){
         var tokendecoded = checkJwt.decodetoken();
       mysqlbaglantisi.baglanti.query('SELECT quizid,questionnumber FROM questions WHERE id = ?', [req.body.questionid], async function(error, results, fields) {
          questiondata = results;
+         if(!results[0])
+         {
+            res.send({
+                message: 'No Data Found!',
+                status: false
+            });
+            return;
+         }
            mysqlbaglantisi.baglanti.query('SELECT examid FROM quizs WHERE id = ?', [questiondata[0].quizid], async function(error, results, fields) {
             quizdata = results;
 
@@ -359,7 +367,14 @@ module.exports.deleteanswer = function (req, res){
 
         mysqlbaglantisi.baglanti.query('SELECT quizid,questionnumber FROM questions WHERE id = ?', [req.body.questionid], async function(error, results, fields) {
             questiondata = results;
-            
+            if(!results[0])
+         {
+            res.send({
+                message: 'No Data Found!',
+                status: false
+            });
+            return;
+         }
             mysqlbaglantisi.baglanti.query('SELECT examid FROM quizs WHERE id = ?', [questiondata[0].quizid], async function(error, results, fields) {
                quizdata = results;
    
