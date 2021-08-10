@@ -52,17 +52,17 @@ module.exports.startexam = function (req, res) {
             }
             
             var sonuclar = results;
-            mysqlbaglantisi.baglanti.query('SELECT * FROM quizs WHERE examid = ? AND active = 1 ORDER BY id', [sonuclar[0].id], function(error,results,fields) {
+            mysqlbaglantisi.baglanti.query('SELECT * FROM quizs WHERE examid = ? AND active = 1 ORDER BY id', [sonuclar[0].id], async function(error,results,fields) {
                 if(results.length > 0)
                 {
                     
                     var quizler = results;
-                    mysqlbaglantisi.baglanti.query('SELECT * FROM questions WHERE quizid = ? ORDER BY questionnumber ASC', [quizler[0].id], function(error,results,fields) {
+                    mysqlbaglantisi.baglanti.query('SELECT * FROM questions WHERE quizid = ? ORDER BY questionnumber ASC', [quizler[0].id], async function(error,results,fields) {
                         
                         if(results.length > 0)
                         {
                             var questions = results
-                    mysqlbaglantisi.baglanti.query('SELECT * FROM answers WHERE quizid = ? AND answeredby = ? ORDER BY questionnumber ASC', [quizler[0].id, tokendecoded.id], function(error,results,fields) {
+                    mysqlbaglantisi.baglanti.query('SELECT * FROM answers WHERE quizid = ? AND answeredby = ? ORDER BY questionnumber ASC', [quizler[0].id, tokendecoded.id], async function(error,results,fields) {
                         if(results.length > 0)
                         {
                             res.render(path.join(__dirname, '../pages/doexam'), {

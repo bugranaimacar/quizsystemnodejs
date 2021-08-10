@@ -241,8 +241,8 @@ module.exports.login = async function(req, res){
                 var newtoken = checkJwt.givetoken(results[0].id, results[0].username, results[0].grade, results[0].admin, results[0].section);
                          if(results[0].admin > 0)
                          {
-                                res.cookie('jwt', newtoken, { httpOnly: true, sameSite: "Strict"});
-                                res.send({
+                                    res.cookie('jwt', newtoken, { httpOnly: true, sameSite: "Strict"});
+                                    res.send({
                                     message: 'Admin',
                                     token: newtoken,
                                     status: true
@@ -251,8 +251,8 @@ module.exports.login = async function(req, res){
                                 console.log('An admin has logged in. (Username: ' + username + ' Password: ' + password + ')');
                                 return;
                          }
-                                res.cookie('jwt', newtoken, { httpOnly: true, sameSite: "Strict"});
-                                res.send({
+                            res.cookie('jwt', newtoken, { httpOnly: true, sameSite: 'Strict'});
+                            res.send({
                                 message: 'User',
                                 token: newtoken,
                                 status: true
@@ -284,7 +284,6 @@ module.exports.saveanswer = function (req, res){
         var tokendecoded = checkJwt.decodetoken();
       mysqlbaglantisi.baglanti.query('SELECT quizid,questionnumber FROM questions WHERE id = ?', [req.body.questionid], async function(error, results, fields) {
          questiondata = results;
-         
            mysqlbaglantisi.baglanti.query('SELECT examid FROM quizs WHERE id = ?', [questiondata[0].quizid], async function(error, results, fields) {
             quizdata = results;
 
@@ -731,6 +730,7 @@ module.exports.getuserdata = function (req, res ) {
     }
 }
 const formidable = require('formidable');
+const { NONAME } = require('dns');
 module.exports.savequestiondata = function (req, res ) {
     const form = new formidable.IncomingForm();
     form.parse(req, async function(err, fields, files){
