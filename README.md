@@ -1,5 +1,6 @@
 # quizsystem
-Fully Responsive Quiz System Written in Node JS Don't forget to change RS256 private key.
+Fully Responsive Quiz System Written in Node JS.
+Don't forget to change RS256 private key.
 
 ![mainexam](https://user-images.githubusercontent.com/47912949/127167342-38412c51-3769-419b-b042-17434f8e215e.png)
 
